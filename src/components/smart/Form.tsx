@@ -3,12 +3,8 @@ import { useForm } from 'react-hook-form';
 import uniqid from 'uniqid';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
+import { IForm } from '../../models/IForm';
 import { articlesSlice } from '../../store/slice/articlesSlice';
-
-interface IForm {
-  title: string;
-  body: string;
-}
 
 const Form: FC = memo(() => {
   const dispatch = useAppDispatch();
@@ -45,8 +41,8 @@ const Form: FC = memo(() => {
               required: 'Поле обязательно к заполнению',
             })}
           />
-          {errors?.body && (
-            <p className="error">{errors?.body?.message || 'Error!'}</p>
+          {errors?.title && (
+            <p className="error">{errors?.title?.message || 'Error!'}</p>
           )}
         </label>
         <label>

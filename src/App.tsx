@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { useEffect } from 'react';
 
 import Header from './components/simple/Header';
@@ -17,7 +19,6 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchArticles());
-    /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
   return (

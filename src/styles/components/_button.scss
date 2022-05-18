@@ -10,7 +10,7 @@
     opacity: 0.9;
   }
   &__create {
-    background-color: $button;
+    background-color: $create;
     align-self: flex-end;
     padding: 10px 30px;
   }
@@ -19,5 +19,11 @@
     border: 1px solid $border;
     border-radius: 5px;
     background-color: #fff;
+  }
+  &__cancel{
+    background-color: $cancel;
+    align-self: flex-end;
+    margin-top: 10px;
+    padding: 10px 30px;
   }
 }

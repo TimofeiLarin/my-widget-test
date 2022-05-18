@@ -1,0 +1,44 @@
+.modal{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top:0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: alias;
+  &__content{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    border: 2px solid $border;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    cursor: auto;
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    label:last-of-type{
+      margin:20px 0;
+    }
+    input {
+      width: 100%;
+      border: 2px solid $border;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 1.8rem;
+    }
+    textarea{
+      width: 100%;
+      border: 2px solid $border;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 1.8rem;
+      resize:none;
+    }
+  }
+}
