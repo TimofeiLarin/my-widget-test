@@ -1,11 +1,9 @@
 /* eslint-disable max-len */
-import React from 'react';
-
-interface Props {
+interface PropsSvgSelector {
   name: string;
 }
 
-const SvgSelector = ({ name }: Props) => {
+const SvgSelector = ({ name }: PropsSvgSelector) => {
   switch (name) {
   case 'logo':
     return (

@@ -4,11 +4,11 @@ import { useForm } from 'react-hook-form';
 import useAppDispatch from '../../hooks/useAppDispatch';
 
 import IArticle from '../../models/IArticle';
-import { IForm } from '../../models/IForm';
+import IForm from '../../models/IForm';
 import { articlesSlice } from '../../store/slice/articlesSlice';
 
 interface IModalProps {
-  setActive: (t: boolean) => void;
+  setActive: (active: boolean) => void;
   data: IArticle;
 }
 

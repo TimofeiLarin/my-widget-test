@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import uniqid from 'uniqid';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
-import { IForm } from '../../models/IForm';
+import IForm from '../../models/IForm';
 import { articlesSlice } from '../../store/slice/articlesSlice';
 
 const Form: FC = memo(() => {

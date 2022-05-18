@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 
 import Header from './components/simple/Header';
 import ArticleCard from './components/smart/ArticleCard';
@@ -11,7 +11,7 @@ import fetchArticles from './store/action/fetchArticles';
 
 import './styles/app.scss';
 
-function App() {
+const App: FC = () => {
   const dispatch = useAppDispatch();
   const { articles, isLoading, error } = useAppSelector(
     (state) => state.articlesReducer
@@ -34,6 +34,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
