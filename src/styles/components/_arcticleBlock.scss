@@ -1,0 +1,15 @@
+.articleCard{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 2px solid $border;
+  border-radius: 10px;
+  &__description{
+    margin: 20px 0;
+  }
+  &__buttons{
+    align-self: flex-end;
+  }
+}

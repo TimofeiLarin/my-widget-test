@@ -1,0 +1,19 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  margin: 0 auto;
+  border-top: 2px solid $border;
+  background: #fff;
+}
+
+.loading{
+  color: #009c24;
+  text-decoration: underline;
+}
+
+.error{
+  color: red;
+  text-decoration: underline;
+}

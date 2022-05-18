@@ -1,54 +1,70 @@
-import React, { FC, FormEvent, useState } from 'react';
+import { FC, memo } from 'react';
+import { useForm } from 'react-hook-form';
 import uniqid from 'uniqid';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import { articlesSlice } from '../../store/slice/articlesSlice';
 
-const Form: FC = () => {
-  const [nameArticle, setNameArticle] = useState('');
-  const [descriptionArticle, setDescriptionArticle] = useState('');
+interface IForm {
+  title: string;
+  body: string;
+}
 
+const Form: FC = memo(() => {
   const dispatch = useAppDispatch();
 
-  const createArticle = (): void => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm<IForm>({ mode: 'onChange' });
+
+  const onSubmit = (data: IForm) => {
+    const { title, body } = data;
     dispatch(
       articlesSlice.actions.addArticle({
-        id: Number(uniqid()),
-        title: nameArticle,
-        body: descriptionArticle,
+        id: uniqid(),
+        title: title,
+        body: body,
       })
     );
+    reset();
   };
+
   return (
     <div className="form">
-      <label>
-        Заголовок
-        <input
-          className="form__input"
-          type="text"
-          placeholder="Укажите заголовок для статьи"
-          value={nameArticle}
-          onChange={(e: FormEvent<HTMLInputElement>) =>
-            setNameArticle(e.currentTarget.value)
-          }
-        />
-      </label>
-      <label>
-        Описание
-        <textarea
-          className="form__textarea"
-          placeholder="Укажите описание"
-          value={descriptionArticle}
-          onChange={(e: FormEvent<HTMLTextAreaElement>) =>
-            setDescriptionArticle(e.currentTarget.value)
-          }
-        />
-        <button className="button button__create" onClick={createArticle}>
-          Создать
-        </button>
-      </label>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>
+          <h2>Заголовок</h2>
+          <input
+            className="form__input"
+            type="text"
+            placeholder="Укажите заголовок для статьи"
+            {...register('title', {
+              required: 'Поле обязательно к заполнению',
+            })}
+          />
+          {errors?.body && (
+            <p className="error">{errors?.body?.message || 'Error!'}</p>
+          )}
+        </label>
+        <label>
+          <p>Описание</p>
+          <textarea
+            className="form__textarea"
+            placeholder="Укажите описание"
+            {...register('body', { required: 'Поле обязательно к заполнению' })}
+            rows={5}
+          />
+          {errors?.body && (
+            <p className="error">{errors?.body?.message || 'Error!'}</p>
+          )}
+        </label>
+        <button className="button button__create">Создать</button>
+      </form>
     </div>
   );
-};
+});
 
 export default Form;

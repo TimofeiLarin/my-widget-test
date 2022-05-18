@@ -23,17 +23,17 @@ export const articlesSlice = createSlice({
       state.articles.unshift(action.payload);
     },
     changeArticle(state, action: PayloadAction<IArticle>) {
-      state.articles.map((article) => {
-        const { id } = article;
-        if (id === action.payload.id) {
-          return { id, title: action.payload.title, body: action.payload.body };
-        } else {
-          return article;
-        }
-      });
+      state.articles.splice(
+        state.articles.findIndex(({ id }) => id === action.payload.id),
+        1,
+        action.payload
+      );
     },
-    deleteArticle(state, action: PayloadAction<IArticle>) {
-      state.articles.filter(({ id }) => id !== action.payload.id);
+    deleteArticle(state, action: PayloadAction<number | string>) {
+      state.articles.splice(
+        state.articles.findIndex(({ id }) => id === action.payload),
+        1
+      );
     },
   },
   extraReducers: {

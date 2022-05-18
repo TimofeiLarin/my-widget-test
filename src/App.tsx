@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import Header from './components/simple/Header';
+import ArticleCard from './components/smart/ArticleCard';
 import Form from './components/smart/Form';
 import useAppDispatch from './hooks/useAppDispatch';
 import useAppSelector from './hooks/useAppSelector';
@@ -16,15 +17,19 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchArticles());
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
+
   return (
     <div className="app">
       <Header />
       <div className="container">
         <Form />
-        {isLoading && <h1>Loading...</h1>}
-        {error && error}
-        {JSON.stringify(articles)}
+        {isLoading && <h2 className="loading">Loading...</h2>}
+        {error && <h2 className="error">{error}</h2>}
+        {articles.map(({ id, title, body }) => (
+          <ArticleCard key={id} id={id} title={title} body={body} />
+        ))}
       </div>
     </div>
   );
