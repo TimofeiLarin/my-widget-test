@@ -1,21 +1,22 @@
-import { FC } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
 
-import IArticle from '../../models/IArticle';
 import IForm from '../../models/IForm';
+import { getArticles } from '../../store/selectors/articlesSelector';
 import { articlesSlice } from '../../store/slice/articlesSlice';
 
 interface IModalProps {
+  id: string | number;
   setActive: (active: boolean) => void;
-  data: IArticle;
 }
 
-const Modal: FC<IModalProps> = ({ setActive, data }) => {
-  const { id, title, body } = data;
-
+const Modal: FC<IModalProps> = memo(({ id, setActive }) => {
   const dispatch = useAppDispatch();
+  const articles = useAppSelector((state) => getArticles(state));
+  const article = articles.find((item) => item.id === id);
 
   const {
     register,
@@ -35,8 +36,10 @@ const Modal: FC<IModalProps> = ({ setActive, data }) => {
     setActive(false);
   };
 
+  const onClickClose = useCallback(() => setActive(false), []);
+
   return (
-    <div className="modal" onClick={() => setActive(false)}>
+    <div className="modal" onClick={onClickClose}>
       <div className="modal__content" onClick={(e) => e.stopPropagation()}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label>
@@ -48,7 +51,7 @@ const Modal: FC<IModalProps> = ({ setActive, data }) => {
               {...register('title', {
                 required: 'Поле обязательно к заполнению',
               })}
-              defaultValue={title}
+              defaultValue={article?.title}
             />
             {errors?.title && (
               <p className="error">{errors?.title?.message || 'Error!'}</p>
@@ -63,7 +66,7 @@ const Modal: FC<IModalProps> = ({ setActive, data }) => {
                 required: 'Поле обязательно к заполнению',
               })}
               rows={5}
-              defaultValue={body}
+              defaultValue={article?.body}
             />
             {errors?.body && (
               <p className="error">{errors?.body?.message || 'Error!'}</p>
@@ -71,15 +74,12 @@ const Modal: FC<IModalProps> = ({ setActive, data }) => {
           </label>
           <button className="button button__create">Изменить</button>
         </form>
-        <button
-          className="button button__cancel"
-          onClick={() => setActive(false)}
-        >
+        <button className="button button__cancel" onClick={onClickClose}>
           Отменить
         </button>
       </div>
     </div>
   );
-};
+});
 
 export default Modal;

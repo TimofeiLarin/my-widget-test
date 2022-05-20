@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import uniqid from 'uniqid';
 
@@ -6,7 +6,7 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import IForm from '../../models/IForm';
 import { articlesSlice } from '../../store/slice/articlesSlice';
 
-const Form: FC = memo(() => {
+const Form: FC = () => {
   const dispatch = useAppDispatch();
 
   const {
@@ -61,6 +61,6 @@ const Form: FC = memo(() => {
       </form>
     </div>
   );
-});
+};
 
 export default Form;

@@ -1,41 +1,45 @@
-import { FC, memo, useState } from 'react';
+import { FC, memo, useCallback } from 'react';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import IArticle from '../../models/IArticle';
 import { articlesSlice } from '../../store/slice/articlesSlice';
-import SvgSelector from '../helper/SvgSelector';
 
-import Modal from './Modal';
+import edit from '../../assets/img/edit.svg';
+import remove from '../../assets/img/remove.svg';
 
-const ArticleCard: FC<IArticle> = memo((props) => {
-  const { id, title, body } = props;
-  const dispatch = useAppDispatch();
+interface IPropsArticle extends IArticle {
+  setModalActive: (active: boolean) => void;
+  setIdModal: (id: string | number) => void;
+}
 
-  const deleteArticle = () => {
-    dispatch(articlesSlice.actions.deleteArticle(id));
-  };
+const ArticleCard: FC<IPropsArticle> = memo(
+  ({ id, title, body, setModalActive, setIdModal }) => {
+    const dispatch = useAppDispatch();
 
-  const [modalActive, setModalActive] = useState(false);
-  return (
-    <div className="articleCard">
-      <h2 className="articleCard__name">{title}</h2>
-      <p className="articleCard__description">{body}</p>
-      <div className="articleCard__buttons">
-        <button
-          className="button button__card"
-          onClick={() => setModalActive(true)}
-        >
-          <SvgSelector name="pencil" />
-        </button>
-        <button className="button button__card" onClick={deleteArticle}>
-          <SvgSelector name="delete" />
-        </button>
+    const deleteArticle = () => {
+      dispatch(articlesSlice.actions.deleteArticle(id));
+    };
+
+    const clickOnChange = useCallback(() => {
+      setIdModal(id);
+      setModalActive(true);
+    }, []);
+
+    return (
+      <div className="articleCard">
+        <h2 className="articleCard__name">{title}</h2>
+        <p className="articleCard__description">{body}</p>
+        <div className="articleCard__buttons">
+          <button className="button button__card" onClick={clickOnChange}>
+            <img src={edit} width={20} alt="Edit" />
+          </button>
+          <button className="button button__card" onClick={deleteArticle}>
+            <img src={remove} width={20} alt="Remove" />
+          </button>
+        </div>
       </div>
-      {modalActive && (
-        <Modal data={props} setActive={setModalActive} />
-      )}
-    </div>
-  );
-});
+    );
+  }
+);
 
 export default ArticleCard;
